@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Alaska : Le Blog</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+  <div class="container">
+    <header class="row">
+      <div class="col-lg-12 bienvenue">
+        <h1>Billet simple pour l'Alaska</h1>
+      </div>
+    </header>
+
+    <div class="row">
+      <nav class="col-lg-3 liste">
+        <p class="titre">Liste des chapitres</p>
+          <p>Récupérer dans la base de données le tableau des titres de chapitres, le parcourir et l'afficher. </p>
+      </nav>
+      <section class="col-lg-9 chapitre">
+        <p class="titre">Chapitre en lecture</p>
+        Ici connecter la base de données avec du PHP pour récupérer et afficher le dernier chapitre posté par l'auteur.
+        <div class="row">
+          <nav class="col-lg-12 commentaires">
+            <p class="titre">Commentaires lié au chapitre en cours de lecture</p>
+            Le lecteur doit pouvoir écrire un nouveau Commentaires
+            Le commentaire doit s'enregistrer dans la bdd
+            Afficher les commentaires
+          </nav>
+        </div>
+      </section>
+    </div>
+
+    <footer class="row boutons">
+      <a href="#" class="bouton"><span class="glyphicon glyphicon-arrow-left"></span> Chapitre précédent</a>Recharge la page avec le chapitre précédent et ses commentaires associés
+      <a href="#" class="bouton">Chapitre suivant <span class="glyphicon glyphicon-arrow-right"></span></a>Recharge la page avec le chapitre suivant et ses commentaires associés
+    </footer>
+  </div>
+
+  <script src="bootstrap/js/jquery.js"></script>
+  <script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
