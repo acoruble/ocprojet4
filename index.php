@@ -60,15 +60,21 @@
           $req = $bdd->query("SELECT COUNT(*) AS ID FROM billets");
           $donnees = $req->fetch();
           $req->closeCursor();
-          echo $donnees["ID"];
 
           $chapitre_choisi;
+          $chapitre_navigation;
+          if (isset($_POST["chapitreNavigation"])){
+          $chapitre_navigation=$_POST["chapitreNavigation"];
+          }
+          else {
+            $chapitre_navigation=0;
+          }
           if (isset($_POST["chapitreClique"])) {
             $chapitre_choisi=$_POST["chapitreClique"];
           }
           else {
-            if (($_POST["chapitreNavigation"]>=1)&&($_POST["chapitreNavigation"]<=($donnees["ID"]))) {
-            // && ($_POST["chapitreNavigation"]<= {
+            if (($chapitre_navigation>=1)&&($_POST["chapitreNavigation"]<=($donnees["ID"]))) {
+              // && ($_POST["chapitreNavigation"]<= {
               $chapitre_choisi=$_POST["chapitreNavigation"];
             }
             else {
@@ -102,9 +108,14 @@
 
               <form action="commentaires_post.php" method="post">
                 <p>
-                  <input type="text" name="titreChapitre" value="<?php echo $grand_titre; ?>" />
+                  <input type="hidden" name="titreChapitre" value="<?php echo $grand_titre; ?>" />
+
+                  <label for="pseudo">Pseudo :</label>
                   <input type="text" name="pseudo" />
+
+                  <label for="message">Commentaire :</label>
                   <input type="text" name="message" />
+
                   <input type="submit" value="Valider" />
                 </p>
               </form>
@@ -113,7 +124,7 @@
 
               <?php
 
-              $req = $bdd->prepare('SELECT pseudo, date, message FROM commentaires WHERE titreChapitre = ?');
+              $req = $bdd->prepare('SELECT ID, pseudo, date, message FROM commentaires WHERE titreChapitre = ?');
               $req-> execute(array($grand_titre));
               while ($donnees = $req->fetch())
               {
@@ -122,8 +133,30 @@
                   <?php echo $donnees['pseudo'];?> -
                   <?php echo $donnees['date']; ?><br /><br />
                   <?php echo $donnees['message']; ?>
-                </p>
+                </p><br />
+                <form action="index.php" method="post">
+                  <input type="hidden" name="IDCommentaire" value=<?php echo $donnees['ID']; ?>>
+                  <input type="hidden" name="nbSignalementCommentaire" value="1">
+                  <input type="submit" name="signalerCommentaire" value="Signaler ce commentaire !"><br>
+                </form><br /><br />
                 <?php
+              }
+              $req->closeCursor();
+
+              // <!-- **********SIGNALER UN COMMENTAIRE********************************************************************************* -->
+
+              if (isset($_POST["nbSignalementCommentaire"])) {
+                $req = $bdd->prepare('SELECT nbSignalement FROM commentaires WHERE ID = ?');
+                $req-> execute(array($_POST["IDCommentaire"]));
+                while ($donnees = $req->fetch())
+                {
+                  $nouveauNbSignalement=$donnees["nbSignalement"]+1;
+                  $req = $bdd->prepare('UPDATE commentaires SET nbSignalement = :nbSignalement WHERE  ID = :IDCommentaire');
+                  $req->execute(array(
+                    'nbSignalement' => $nouveauNbSignalement,
+                    'IDCommentaire' => $_POST["IDCommentaire"],
+                  ));
+                }
               }
               $req->closeCursor();
               ?>
@@ -146,9 +179,6 @@
           <input type="submit" name="boutonSuivant" value="Chapitre suivant"><br>
         </form>
 
-
-        <!-- <a href="#" class="bouton"><span class="glyphicon glyphicon-arrow-left"></span> Chapitre précédent</a>Recharge la page avec le chapitre précédent et ses commentaires associés</br> -->
-        <!-- <a href="#" class="bouton">Chapitre suivant <span class="glyphicon glyphicon-arrow-right"></span></a>Recharge la page avec le chapitre suivant et ses commentaires associés -->
       </footer>
     </div>
 
