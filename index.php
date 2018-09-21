@@ -104,7 +104,7 @@
             <nav class="col-lg-12 commentaires">
               <p class="titre">Commentaires </p></br>
 
-              <!-- **********AJOUTER UN NOUVEAU COMMENTAIRE ?????????????????????????? /!\ DEFAILLANT /!\************************************************************************************ -->
+              <!-- **********AJOUTER UN NOUVEAU COMMENTAIRE ************************************************************************************ -->
 
               <form action="index.php" method="post">
                 <input type="hidden" name="titreChapitre" value="<?php echo $grand_titre; ?>" />

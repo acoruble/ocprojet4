@@ -5,11 +5,11 @@
     <?= isset($title) ? $title : 'Mon super site' ?>
   </title>
   <meta charset="utf-8" />
-  <link rel="stylesheet" href="/css/Envision.css" type="text/css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
   <script>
   tinymce.init({
-    selector: '#mytextarea'
+    selector: 'textarea'
   });
 </script>
 </head>
@@ -19,12 +19,12 @@
     <header>
       <h1>Bienvenue !</h1>
     </header>
-    <nav>
-      <ul>
-        <li><a href="backend.php">Créer un billet</a></li>
-        <li><a href="modifier.php">Modifier un billet</a></li>
-        <li><a href="supprimer.php">Supprimer un billet</a></li>
-        <li><a href="moderercommentaires.php">Modérer les commentaires</a></li>
+    <nav class = "navbar navbar-expand-lg navbar-light bg-light">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="backend.php">Créer un billet</a></li>
+        <li class="nav-item"><a class="nav-link" href="modifier.php">Modifier un billet</a></li>
+        <li class="nav-item"><a class="nav-link" href="supprimer.php">Supprimer un billet</a></li>
+        <li class="nav-item"><a class="nav-link" href="moderercommentaires.php">Modérer les commentaires</a></li>
       </ul>
     </nav>
 
