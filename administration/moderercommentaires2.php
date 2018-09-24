@@ -1,4 +1,35 @@
-﻿<!DOCTYPE html>
+<!-- //*********CONNEXION A LA BDD************************************************************************************************************* -->
+
+    <?php
+    // On démarre la session AVANT d'écrire du code HTML
+session_start();
+if (empty($_SESSION['ID']) OR empty($_SESSION['Nom'])) {
+  header('Location: http://localhost/tests/Exercices/projet/index2.php');
+exit();
+}
+    try
+    {
+      // $bdd = new PDO('mysql:host=db754453329.db.1and1.com;dbname=db754453329;charset=utf8', 'dbo754453329', 'Lisaume14*');
+      $bdd = new PDO('mysql:host=localhost;dbname=ocprojet4;charset=utf8', 'root', '');
+    }
+    catch (Exception $e)
+    {
+      die('Erreur : ' . $e->getMessage());
+    }
+    ?>
+    <!-- //***********ENVOI A LA BDD************************************************************************************************************************************************************************************************ -->
+    <?php
+    if (isset($_POST["commentaireasupprimer"])){
+      $req = $bdd->prepare('DELETE FROM commentaires WHERE ID = :ID');
+      $req->execute(array(
+        'ID' => $_POST["commentaireasupprimer"],
+      ));
+      echo " Ce commentaire a bien été supprimé !";
+      $req->closeCursor();
+    }
+    ?>
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -24,10 +55,11 @@
       <div class="row">
         <div class="col-md-12 rounded border border-primary bg-primary">
           <ul class="nav nav-pills bg-primary text-light text-center shadow-lg justify-content-center">
-            <li class="nav-item w-25" > <a href="backend2.php" class="nav-link"> Créer un billet</a> </li>
-            <li class="nav-item w-25"> <a class="nav-link" href="modifier2.php">Modifier un billet</a> </li>
-            <li class="nav-item w-25"> <a href="supprimer2.php" class="nav-link">Supprimer un billet</a> </li>
-            <li class="nav-item w-25"> <a href="moderercommentaires2.php" class="nav-link">Modérer les commentaires</a> </li>
+            <li class="nav-item w-20" > <a href="backend2.php" class="nav-link"> Créer un billet</a> </li>
+            <li class="nav-item w-20"> <a class="nav-link" href="modifier2.php">Modifier un billet</a> </li>
+            <li class="nav-item w-20"> <a href="supprimer2.php" class="nav-link">Supprimer un billet</a> </li>
+            <li class="nav-item w-20"> <a href="moderercommentaires2.php" class="nav-link">Modérer les commentaires</a> </li>
+            <li class="nav-item w-20"> <a href="deconnexion.php" class="nav-link">Se déconnecter</a> </li>
           </ul>
         </div>
       </div>
@@ -38,24 +70,14 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12">
-          <h1 class="text-center display-4 p-1 text-info">Bienvenue !</h1>
+          <h1 class="text-center display-4 p-1 text-info">Bienvenue <?php if (isset($_SESSION['ID']) AND isset($_SESSION['Nom']))
+          {
+              echo $_SESSION['Nom'];
+          }?>!</h1>
         </div>
       </div>
     </div>
   </div>
-
-  <!-- //*********CONNEXION A LA BDD************************************************************************************************************* -->
-
-      <?php
-      try
-      {
-        $bdd = new PDO('mysql:host=db754453329.db.1and1.com;dbname=db754453329;charset=utf8', 'dbo754453329', 'Lisaume14*');
-      }
-      catch (Exception $e)
-      {
-        die('Erreur : ' . $e->getMessage());
-      }
-      ?>
 
       <!-- *********SUPPRIMER UN BILLET EXISTANT************************************************************************************************************* -->
 
@@ -85,18 +107,6 @@
             ?>
           </select><button type="submit" class="btn btn-info btn-lg">Valider<br></button>
           </form>
-
-          <!-- //***********ENVOI A LA BDD************************************************************************************************************************************************************************************************ -->
-          <?php
-          if (isset($_POST["commentaireasupprimer"])){
-            $req = $bdd->prepare('DELETE FROM commentaires WHERE ID = :ID');
-            $req->execute(array(
-              'ID' => $_POST["commentaireasupprimer"],
-            ));
-            echo " Ce commentaire a bien été supprimé !";
-            $req->closeCursor();
-          }
-          ?>
 
         </div>
       </div>

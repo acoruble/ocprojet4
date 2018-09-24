@@ -1,3 +1,16 @@
+<!-- //*********CONNEXION A LA BDD************************************************************************************************************* --> -->
+<?php
+try
+{
+  // $bdd = new PDO('mysql:host=db754453329.db.1and1.com;dbname=db754453329;charset=utf8', 'dbo754453329', 'Lisaume14*');
+  $bdd = new PDO('mysql:host=localhost;dbname=ocprojet4;charset=utf8', 'root', '');
+}
+catch (Exception $e)
+{
+  die('Erreur : ' . $e->getMessage());
+}
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -31,15 +44,6 @@
           <h1 class="text-center text-light">Liste des chapitres</h1>
           <ul class="nav nav-pills flex-column">
             <?php
-            try
-            {
-              $bdd = new PDO('mysql:host=db754453329.db.1and1.com;dbname=db754453329;charset=utf8', 'dbo754453329', 'Lisaume14*');
-            }
-            catch (Exception $e)
-            {
-              die('Erreur : ' . $e->getMessage());
-            }
-
             $reponse = $bdd->query('SELECT ID, titre FROM billets ORDER BY ID');
             while($donnees = $reponse->fetch())
             {
