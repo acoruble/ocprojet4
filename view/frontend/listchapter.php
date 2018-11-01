@@ -5,8 +5,7 @@
           <ul class="nav nav-pills flex-column">
 
             <?php foreach ($listPosts as $post): ?>
-              <form action="index.php" method="get">
-                <input type="hidden" name="action" style="size:0" value="selectChapter">
+              <form action="index.php?action=selectChapter" method="post">
                 <input type="hidden" name="PostClick" style="size:0" value="<?= $post->id() ?>">
                 <input type="submit" name="titleChapter" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize" value="<?= $post->title() ?>"><br>
               </form>

@@ -3,17 +3,13 @@
 /**
 *
 */
-class Posts extends PostsManager
+class User extends UserManager
 {
 
   protected $id,
-            $title,
-            $content,
-            $errors = [];
-
-  const title_INVALID = 1;
-  const content_INVALID = 2;
-
+            $pseudo,
+            $password,
+            $name;
 
   public function __construct(array $data = null)
   {
@@ -42,33 +38,40 @@ class Posts extends PostsManager
     $this->id = (int) $id;
   }
 
-  public function setTitle($title)
+  public function setPseudo($pseudo)
   {
-    if (!is_string($title) || empty($title))
+    if (!is_string($pseudo) || empty($pseudo))
     {
       $this->errors[] = self::title_INVALID;
     }
     else
     {
-      $this->title = $title;
+      $this->pseudo = $pseudo;
     }
   }
 
-  public function setContent($content)
+  public function setPassword($password)
   {
-    if (!is_string($content) || empty($content))
+    if (!is_string($password) || empty($password))
     {
       $this->errors[] = self::content_INVALID;
     }
     else
     {
-      $this->content = $content;
+      $this->password = $password;
     }
   }
 
-  public function errors()
+  public function setName($name)
   {
-    return $this->errors;
+    if (!is_string($name) || empty($name))
+    {
+      $this->errors[] = self::content_INVALID;
+    }
+    else
+    {
+      $this->name = $name;
+    }
   }
 
   public function id()
@@ -76,14 +79,19 @@ class Posts extends PostsManager
     return $this->id;
   }
 
-  public function title()
+  public function pseudo()
   {
-    return $this->title;
+    return $this->pseudo;
   }
 
-  public function content()
+  public function password()
   {
-    return $this->content;
+    return $this->password;
+  }
+
+  public function name()
+  {
+    return $this->name;
   }
 
 }

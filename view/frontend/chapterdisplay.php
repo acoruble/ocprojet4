@@ -1,8 +1,8 @@
 <?php ob_start();
   ?>
   <p class="text-light text-left">
-    <?= $Post->title() ?><br /><br />
-    <?= $Post->content() ?>
+    <?= $post->title() ?><br /><br />
+    <?= $post->content() ?>
   </p>
 
   <?php

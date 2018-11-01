@@ -52,8 +52,8 @@
             <!-- **********AJOUTER UN NOUVEAU COMMENTAIRE ************************************************************************************ -->
 
             <p class="">N'hésitez pas à donner votre avis !</p>
-            <form class="text-right" action="index.php" method="post">
-              <input type="hidden" name="titleChapter" value="<?= $Post->title() ?>" />
+            <form class="text-right" action="index.php?action=newComment" method="post">
+              <input type="hidden" name="titleChapter" value="<?= $post->title() ?>" />
               <div class="form-group"> <input type="text" class="form-control" name= "pseudo" placeholder="Pseudo"> </div>
               <div class="form-group"> <input type="text" class="form-control h-25" name="message" placeholder="Commentaire"> </div>
               <button type="submit" class="btn text-center btn-info shadow-lg rounded">Valider</button>
@@ -68,32 +68,11 @@
     </div>
   </div>
 
-  <!-- ****************PIED DE PAGE : CHANGER DE CHAPITRES******************************************************************* -->
-
-  <div class="py-5">
-    <div class="row" style="">
-      <div class="col-md-6 text-right" style="">
-        <form action="index2.php" method="post">
-          <input type="hidden" name="chapitreNavigation" value=""><br><br>
-          <input type="submit" class="btn btn-info text-uppercase rounded shadow-lg" name="boutonPrecedent" value="Chapitre précédent"><br>
-        </form>
-      </div>
-
-      <div class="col-md-6 text-left">
-        <form action="index2.php" method="post">
-          <input type="hidden" name="chapitreNavigation" value=""><br><br>
-          <input type="submit" class="btn btn-info text-uppercase rounded shadow-lg" name="boutonSuivant" value="Chapitre suivant"><br>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <div class="py-5">
     <div class="row" style="">
       <div class="col-md-12 text-center">
-        <form action="index.php" method="get">
-          <!-- <input type="hidden" name="chapitreNavigation" value=""><br><br> -->
-          <input type="submit" class="btn btn-info text-uppercase rounded shadow-lg" name="Administration" value="Administration"><br>
+        <form action="index.php?admin=connection" method="post">
+          <input type="submit" class="btn btn-info text-uppercase rounded shadow-lg" value="Administration"><br>
         </form>
       </div>
     </div>

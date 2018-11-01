@@ -8,61 +8,76 @@ class FrontEnd
 
   public function home()
   {
-    $Posts = new Posts();
-    $Comments = new Comments();
-    $listPosts = $Posts->getListPosts();
-    $Post = $Posts->getFirstPost();
-    $comments = $Comments->getComments($Post->title());
+    $posts = new Posts();
+    $comments = new Comments();
+    $listPosts = $posts->getListPosts();
+    $post = $posts->getFirstPost();
+    $comments = $comments->getComments($post->title());
     require ('view/frontend/chapterdisplay.php');
   }
 
   public function selectChapter($selectChapter)
   {
-    $Posts = new Posts();
-    $Post = $Posts->getPosts($selectChapter);
-    var_dump($comments);
-    require ('view/frontend/home.php');
+    $posts = new Posts();
+    $comments = new Comments();
+    $post = $posts->getPosts($selectChapter);
+    $listPosts = $posts->getListPosts();
+    $comments = $comments->getComments($post->title());
+    require ('view/frontend/chapterdisplay.php');
   }
 
-  public function displayComments($title)
+  public function newComment($titleChapter, $pseudo, $message)
   {
-    $Comments = new Comments();
-    var_dump($title);
-    $comments = $Comments->getComments($title);
-    var_dump($comments);
-    return $comments;
+    $comments = new Comments();
+    $comments->addcomments($titleChapter, $pseudo, $message);
   }
+
+  public function notifyComments($id)
+  {
+    $comments = new Comments();
+    $displayReport = $comments->displayreportcomment($id);
+    $comments->updatereportcomment($displayReport, $id);
+  }
+
+  // public function displayComments($title)
+  // {
+  //   $comments = new Comments();
+  //   var_dump($title);
+  //   $comments = $comments->getComments($title);
+  //   var_dump($comments);
+  //   return $comments;
+  // }
 
 }
 
 // else {
 //   $titleChapter = 'Prologue';
-//   $commentsByChapter = $Comments->getComments($titleChapter);
+//   $commentsByChapter = $comments->getComments($titleChapter);
 // }
 
 // if (isset($_GET["PostClick"]))
 // {
-//   $Post = $Posts->getPosts($_GET["PostClick"]);
-//   $comments = $Comments->getComments($Post->title());
+//   $post = $posts->getPosts($_GET["PostClick"]);
+//   $comments = $comments->getComments($post->title());
 //   require ('view/frontend/home.php');
 // }
 //
 // else
 // {
-//   $Post = $Posts->getFirstPost();
-//   $comments = $Comments->getComments($Post->title());
+//   $post = $posts->getFirstPost();
+//   $comments = $comments->getComments($post->title());
 //   require ('view/frontend/home.php');
 // }
 
 // if (isset($_POST['pseudo']))
 // {
-//   $Comments->addcomments($_POST['titleChapter'],$_POST['pseudo'],$_POST['message']);
+//   $comments->addcomments($_POST['titleChapter'],$_POST['pseudo'],$_POST['message']);
 // }
 //
 // if (isset($_POST["IDComment"]))
 // {
-//   $displayreport = $Comments->displayreportcomment($_POST['IDComment']);
-//   var_dump($displayreport);
-//   $Comments->updatereportcomment($displayreport, $_POST['IDComment']);
+//   $displayReport = $comments->displayreportcomment($_POST['IDComment']);
+//   var_dump($displayReport);
+//   $comments->updatereportcomment($displayReport, $_POST['IDComment']);
 //
 // }

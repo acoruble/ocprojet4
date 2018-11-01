@@ -18,26 +18,18 @@
 </head>
 
 <body style="	box-shadow: 0px 0px 4px  black;" >
-  <?php
-  echo $errorTitre;
-  echo $errorContenu;
-   ?>
   <div class="p-2" style="">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
           <ul class="nav">
               <li class="nav-item">
-                <a href="index.php?Administration=Administration" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Créer un billet</a>
+                <a href="index.php?admin=createpost" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Créer un billet</a>
+                <a href="index.php?admin=updatepost" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Modifier un billet</a>
+                <a href="index.php?admin=deletepost" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Supprimer un billet</a>
+                <a href="index.php?admin=controlcomments" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Modérer les commentaires</a>
+                <a href="index.php?admin=logout" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize">Se déconnecter</a>
               </li>
-
-              <form action="index.php" method="get">
-              <input type="submit" name="action" value="Créer un billet"><br>
-              <input type="submit" name="action" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize" value="Modifier un billet"><br>
-              <input type="submit" name="action" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize" value="Supprimer un billet"><br>
-              <input type="submit" name="action" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize" value="Modérer les commentaires"><br>
-              <input type="submit" name="action" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block text-capitalize" value="Se déconnecter"><br>
-            </form>
       </div>
     </div>
   </div>

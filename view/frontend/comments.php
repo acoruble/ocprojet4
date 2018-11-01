@@ -10,7 +10,7 @@
         <?= $comment->message() ?>
       </p>
       <p>
-        <form action="index.php" method="post">
+        <form action="index.php?action=notifycomment" method="post">
           <input type="hidden" name="IDComment" value=<?= $comment->id() ?>>
           <input type="submit" class="btn text-light btn-info text-center shadow-lg rounded" name="reportComment" value="Signaler ce commentaire !"><br>
         </form>
