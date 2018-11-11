@@ -4,22 +4,20 @@ require_once("Manager.php");
 
 class CommentsManager extends Manager
 {
-  public function getListComments() {
-    $comments=[];
+  public function existComment($id)
+  {
     $db = $this->dbConnect();
-    $listComments = $db->query('SELECT * FROM comments ORDER BY nbReport DESC');
-    while($data = $listComments->fetch())
-    {
-      $comments[] = new Comments($data);
-    }
-    return $comments;
+    $exist = $db->prepare('SELECT ID FROM comments WHERE ID=?');
+    $exist->execute(array($id));
+    $correct = $exist->fetch();
+    return $correct;
   }
 
   public function getComments($titleChapter)
   {
     $comments=[];
     $db = $this->dbConnect();
-    $commentsByChapter = $db->prepare('SELECT ID, pseudo, date, message FROM comments WHERE titleChapter = ?');
+    $commentsByChapter = $db->prepare('SELECT * FROM comments WHERE titleChapter = ? ORDER BY nbReport DESC');
     $commentsByChapter->execute(array($titleChapter));
     while($data = $commentsByChapter->fetch())
     {
@@ -62,4 +60,10 @@ class CommentsManager extends Manager
         ));
   }
 
+  public function delete($id)
+  {
+    $db = $this->dbConnect();
+    $delete= $db->prepare('DELETE FROM comments WHERE ID=?');
+    $delete->execute(array($id));
+  }
 }

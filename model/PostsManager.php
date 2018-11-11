@@ -4,6 +4,14 @@ require_once("Manager.php");
 
 class PostsManager extends Manager
 {
+  public function existPost($id)
+  {
+    $db = $this->dbConnect();
+    $exist = $db->prepare('SELECT ID FROM posts WHERE ID=?');
+    $exist->execute(array($id));
+    $correct = $exist->fetch();
+    return $correct;
+  }
 
   public function createPost($title, $content)
   {
@@ -27,7 +35,7 @@ class PostsManager extends Manager
   public function getPosts($ID)
   {
     $db = $this->dbConnect();
-    $postsById = $db->prepare('SELECT title, content FROM posts WHERE ID=? LIMIT 0,1 ');
+    $postsById = $db->prepare('SELECT ID, title, content FROM posts WHERE ID=? LIMIT 0,1 ');
     $postsById->execute(array($ID));
     $data = $postsById->fetch();
     return new Posts($data);
@@ -45,10 +53,20 @@ class PostsManager extends Manager
     return $posts;
   }
 
+  public function update($id, $title, $content) {
+    $db = $this->dbConnect();
+    $update = $db->prepare('UPDATE posts SET content = :content, title = :title WHERE ID=:id');
+    $update->execute(array(
+      'id' => $id,
+      'title' => $title,
+      'content' => $content,
+    ));
+  }
+
   public function delete($chapter) {
     $db = $this->dbConnect();
     $delete= $db->prepare('DELETE FROM posts WHERE ID=?');
     $delete->execute(array($chapter));
-}
+  }
 
 }

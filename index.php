@@ -1,4 +1,5 @@
 <?php
+session_start();
 require('model/Manager.php');
 require('model/PostsManager.php');
 require('model/CommentsManager.php');
@@ -17,57 +18,71 @@ if (empty($_SERVER["QUERY_STRING"])) {
 }
 
 elseif (isset($_GET['action'])) {
+
   if ($_GET['action'] === 'selectChapter') {
-    $frontend->selectChapter($_POST['PostClick']);
+    $frontend->selectChapter();
   }
-
-  if ($_GET['action'] === 'newComment') {
-    $frontend->newComment($_POST['titleChapter'],$_POST['pseudo'],$_POST['message']);
+  elseif ($_GET['action'] === 'newcomment') {
+    $frontend->newcomment();
     $frontend->home();
   }
-
-  if ($_GET['action'] === 'notifycomment') {
-    $frontend->notifyComments($_POST['IDComment']);
+  elseif ($_GET['action'] === 'notifycomment') {
+    $frontend->notifyComments();
     $frontend->home();
+  }
+  elseif ($_GET['action'] === 'connection') {
+    if (empty($_SESSION['id']) OR empty($_SESSION['nom']))
+    {
+      $frontend->connection();
+    }
+    else {
+      $backend->board();
+    }
+  }
+  elseif ($_GET['action'] === 'login') {
+    $backend->session();
   }
 }
 
-  elseif (isset($_GET['admin'])) {
-    if ($_GET['admin'] === 'connection') {
-      if (empty($_SESSION['ID']) OR empty($_SESSION['Nom']))
-      {
-        $backend->connection();
-      }
-      else {
-        $backend->displayAdmin($_POST['pseudo'], $_POST['password']);
-      }
-    }
+elseif (isset($_GET['admin'])) {
 
-    if ($_GET['admin'] === 'log') {
-        $backend->displayAdmin($_POST['pseudo'], $_POST['password']);
-    }
-
+  if(isset($_SESSION['nom']) && isset($_SESSION['id']))
+  {
     if ($_GET['admin'] === 'board') {
       $backend->board();
     }
-
-    if ($_GET['admin'] === 'createpost') {
-      $backend->create($_POST['title'],$_POST['content']);
+    elseif ($_GET['admin'] === 'createpost') {
+      $backend->create();
     }
 
-    if ($_GET['admin'] === 'updatepost') {
+    elseif ($_GET['admin'] === 'updatepost') {
       $backend->update();
     }
-
-    if ($_GET['admin'] === 'deletepost') {
-      $backend->delete($_POST['idChapterDelete']);
+    elseif ($_GET['admin'] === 'postupdate') {
+      $backend->postupdate();
+      $backend->board();
     }
 
-    if ($_GET['admin'] === 'controlcomments') {
+    elseif ($_GET['admin'] === 'deletepost') {
+      $backend->delete();
+      $backend->board();
+    }
+
+    elseif ($_GET['admin'] === 'controlcomments') {
       $backend->control();
     }
-    if ($_GET['admin'] === 'logout') {
-      // $backend->create($_POST['title'],$_POST['content']);
+
+    elseif ($_GET['admin'] === 'deletecomment') {
+      $backend->deletecomment();
+      $backend->board();
     }
 
+    elseif ($_GET['admin'] === 'logout') {
+      $backend->logout();
+      $frontend->home();
+    }
   }
+  else {
+    $frontend->home();
+  }
+}

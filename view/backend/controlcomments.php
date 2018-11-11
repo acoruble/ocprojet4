@@ -1,26 +1,58 @@
 <?php ob_start();
-  ?>
-  <div class="container">
-    <div class="row bg-primary text-light text-center border-0 shadow-lg rounded-top" style="">
-      <div class="col-md-12 shadow-lg rounded-top" style="">
-        <h1 class="shadow-lg" style="">Supprimer un commentaire existant :<br></h1>
+?>
+</br>
+<div class="container">
+  <div class="row mx-auto col-md-10 col-md-offset-2 table-responsive">
+    <table class="table table-striped table-hover table-bordered">
+      <thead>
+        <tr>
+          <th class="text-center">Pseudo</th>
+          <th class="text-center">Date</th>
+          <th class="text-center">Message</th>
+          <th class="text-center">Nombre de report</th>
+          <th class="text-center">Action</th>
+        </tr>
+      </thead>
+        <?php foreach ($listComments as $comment): ?>
+          <tr>
+            <td class="text-center bg-info"><?= $comment->pseudo() ?></td>
+            <td class="text-center"><?= $comment->date() ?></td>
+            <td class="text-center  bg-info"><?= $comment->message() ?></td>
+            <td class="text-center"><?= $comment->nbReport() ?></td>
+            <td class="text-center bg-info">
+              <!-- <button type="button" class="btn btn-" data-toggle="modal" data-target="#exampleModal">
+                Supprimer
+              </button> -->
+              <a href="index.php?admin=deletecomment&id=<?= $comment->id() ?>" class="btn btn-light btn-xs">Supprimer</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
+  </div>
+</div> -->
 
-    <!-- *****SELECTIONNER LE CHAPITRE A SUPPRIMER****************************************************************************************************************************************** -->
+<?php
+$content = ob_get_clean();
 
-    <div class="row">
-      <div class="bg-primary rounded-bottom text-center py-2 shadow-lg col-md-12" style="" >
-        <ul class="nav nav-pills flex-column">
-          <?php foreach ($listComments as $comments): ?>
-            <form action="index.php?index.php?admin=controlcomments" method="post">
-              <input type="hidden" name="idCommentsControl" style="size:0" value="<?= $comments->id() ?>">
-              <input type="submit" name="commentsControl" class="btn text-center shadow-lg text-info btn-primary btn-lg btn-block" value="<?= $comments->pseudo() ?> a écrit <?= $comments->message() ?> à propos du chapitre : '<?= $comments->titleChapter() ?>', le <?= $comments->date() ?> et a été reporté <?= $comments->nbReport() ?> fois."><br>
-            </form>
-          <?php endforeach; ?>
-        </ul>
-
-  <?php
-  $content = ob_get_clean();
-
-  require('template.php');
+require('template.php');

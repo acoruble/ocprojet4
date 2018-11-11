@@ -1,9 +1,9 @@
 <?php
 
 /**
- *
- */
-class FrontEnd
+*
+*/
+class frontend
 {
 
   public function home()
@@ -16,68 +16,57 @@ class FrontEnd
     require ('view/frontend/chapterdisplay.php');
   }
 
-  public function selectChapter($selectChapter)
+  public function selectChapter()
   {
     $posts = new Posts();
     $comments = new Comments();
-    $post = $posts->getPosts($selectChapter);
-    $listPosts = $posts->getListPosts();
-    $comments = $comments->getComments($post->title());
-    require ('view/frontend/chapterdisplay.php');
+    $correct = $posts-> existPost($_POST['PostClick']);
+    if (!$correct)
+    {
+      echo "<div class='alert alert-danger' role='alert'>Merci de sélectionner un chapitre.</div>";
+      require ('view/frontend/chapterdisplay.php');
+    }
+    else {
+      $post = $posts->getPosts($_POST['PostClick']);
+      $listPosts = $posts->getListPosts();
+      $comments = $comments->getComments($post->title());
+      require ('view/frontend/chapterdisplay.php');
+    }
   }
 
-  public function newComment($titleChapter, $pseudo, $message)
+  public function newcomment()
+  {
+    $posts = new Posts();
+    $comments = new Comments();
+    $correct = $posts-> existPost($_POST['PostClick']);
+    if (!$correct)
+    {
+      echo "<div class='alert alert-danger' role='alert'>Merci de vérifier votre pseudo ou votre message.</div>";
+      require ('view/frontend/chapterdisplay.php');
+    }
+    else {
+      $comments->addcomments(htmlspecialchars($_POST['titleChapter']),htmlspecialchars($_POST['pseudo']),htmlspecialchars($_POST['message']));
+    }
+  }
+
+  public function notifyComments()
   {
     $comments = new Comments();
-    $comments->addcomments($titleChapter, $pseudo, $message);
+    $correct = $comments-> existComment($_POST['IDComment']);
+    if (!$correct)
+    {
+      echo "<div class='alert alert-danger' role='alert'>Nous avons un problème, merci de recommencer votre signalement.</div>";
+      require ('view/frontend/chapterdisplay.php');
+    }
+    else
+    {
+      $displayReport = $comments->displayreportcomment($_POST['IDComment']);
+      $comments->updatereportcomment($displayReport, $_POST['IDComment']);
+    }
   }
 
-  public function notifyComments($id)
+  public function connection()
   {
-    $comments = new Comments();
-    $displayReport = $comments->displayreportcomment($id);
-    $comments->updatereportcomment($displayReport, $id);
+    require ('view/frontend/connection.php');
   }
-
-  // public function displayComments($title)
-  // {
-  //   $comments = new Comments();
-  //   var_dump($title);
-  //   $comments = $comments->getComments($title);
-  //   var_dump($comments);
-  //   return $comments;
-  // }
-
 }
-
-// else {
-//   $titleChapter = 'Prologue';
-//   $commentsByChapter = $comments->getComments($titleChapter);
-// }
-
-// if (isset($_GET["PostClick"]))
-// {
-//   $post = $posts->getPosts($_GET["PostClick"]);
-//   $comments = $comments->getComments($post->title());
-//   require ('view/frontend/home.php');
-// }
-//
-// else
-// {
-//   $post = $posts->getFirstPost();
-//   $comments = $comments->getComments($post->title());
-//   require ('view/frontend/home.php');
-// }
-
-// if (isset($_POST['pseudo']))
-// {
-//   $comments->addcomments($_POST['titleChapter'],$_POST['pseudo'],$_POST['message']);
-// }
-//
-// if (isset($_POST["IDComment"]))
-// {
-//   $displayReport = $comments->displayreportcomment($_POST['IDComment']);
-//   var_dump($displayReport);
-//   $comments->updatereportcomment($displayReport, $_POST['IDComment']);
-//
-// }
